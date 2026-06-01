@@ -11,6 +11,7 @@
   :root{
     --sand:#f3ede1;
     --sand-2:#ebe2d2;
+    --mat:#d9ccb0;
     --cream:#faf6ee;
     --ink:#2b2620;
     --ink-soft:#564f43;
@@ -30,23 +31,34 @@
   body{
     font-family:var(--sans);
     color:var(--ink);
-    background:var(--sand);
+    background:var(--mat);
     line-height:1.65;
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
   }
-  /* grain + warm light */
-  body::before{
-    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
-    background:
-      radial-gradient(120% 80% at 80% -10%, rgba(189,106,62,.16), transparent 55%),
-      radial-gradient(100% 70% at 0% 0%, rgba(51,80,63,.14), transparent 50%);
+  /* framed sheet */
+  .sheet{
+    position:relative;z-index:1;
+    max-width:1120px;margin:20px auto;
+    background:var(--sand);
+    border:1px solid rgba(43,38,32,.22);
+    border-radius:30px;
+    box-shadow:0 1px 0 rgba(250,246,238,.6) inset, 0 36px 90px -48px rgba(43,38,32,.55);
+    overflow:hidden;
   }
-  body::after{
-    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.045;
+  /* grain + warm light, kept inside the frame */
+  .sheet::before{
+    content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(120% 70% at 82% -8%, rgba(189,106,62,.16), transparent 55%),
+      radial-gradient(95% 60% at 0% 0%, rgba(51,80,63,.13), transparent 50%);
+  }
+  .sheet::after{
+    content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.05;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
-  .wrap{position:relative;z-index:1;max-width:1040px;margin:0 auto;padding:0 28px}
+  .wrap{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:0 28px}
+  @media(max-width:720px){ .sheet{margin:10px;border-radius:22px} }
 
   /* lang toggle */
   .topbar{position:fixed;top:0;left:0;right:0;z-index:10;}
@@ -208,6 +220,7 @@
   </div>
 </div>
 
+<main class="sheet">
 <header>
   <div class="wrap hero-grid">
     <div class="hero-text">
@@ -385,6 +398,7 @@
       </p>
 
       <form class="cform" id="cform" action="https://formspree.io/f/mzdwloyz" method="POST">
+        <input type="hidden" name="_subject" value="Nova mensagem do site (função live-in)">
         <div class="row2">
           <input type="text" name="nome" required placeholder="Nome" data-ph-pt="Nome" data-ph-en="Name">
           <input type="email" name="email" required placeholder="Email" data-ph-pt="Email" data-ph-en="Email">
@@ -422,6 +436,7 @@
     <span data-pt>Algarve, Portugal</span><span data-en>Algarve, Portugal</span>
   </div>
 </footer>
+</main>
 
 <script>
   function setLang(l){
